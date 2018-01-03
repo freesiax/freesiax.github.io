@@ -35,6 +35,7 @@
 
         function calc() {
             var total = parseInt(document.getElementById("sites").value) + parseInt(document.getElementById("dur").value);
+            alert(total);
             document.getElementById("totalamt").value = total;
         }
 
@@ -83,7 +84,7 @@
           <option value=24>Skin</option>
           <option value=25>Stroke</option>
           <option value=26>Surgery</option>
-        </select> Therapeutic Area
+        </select> Therapeutic Area <br>
 
         <input type="number" id="sites" min="1"> Sites <br>
         <input type="number" id="dur" min="1"> Duration (months) <br>
@@ -93,8 +94,8 @@
 
         <span id = "datacolx">
             <b>Data collection method:</b>
-            <input type="radio" name="datacol" value="EDC" onclick="writeDC(value)"> EDC
-            <input type="radio" name="datacol" value="Paper" onclick="writeDC(value)"> Paper<br>
+            <input type="radio" name="datacol" value="EDC"> EDC
+            <input type="radio" name="datacol" value="Paper"> Paper<br>
         </span>
        
         <br> 
