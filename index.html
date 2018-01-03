@@ -1,8 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="jquery-3.2.1.js"></script>
+    
+    <script>
+        function hide(text) {
+            var x = document.getElementById(text);
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        
+        window.onload = function() {
+            if (window.jQuery) {  
+                // jQuery is loaded  
+                alert("Yeah!");
+            } else {
+                // jQuery is not loaded
+                alert("Doesn't Work");
+            }
+        }
+        
+        function toggle(source) {
+          checkboxes = document.getElementsByName('serv');
+          for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+          }
+        }
+
+        function calc() {
+            var total = parseInt(document.getElementById("sites").value) + parseInt(document.getElementById("dur").value);
+            document.getElementById("totalamt").value = total;
+        }
+
+        $(document).ready(function(){
+            $("#datacolx input:radio").click(function() {
+                $("#captype").text($(this).val());
+            });
+        });
+    </script>
+    
 </head>
 <body>
    <img src="http://crolarp.com/uploads/3/5/1/8/35182276/1360695402.png" alt="">
@@ -10,57 +52,121 @@
     <h2>Instructions</h2>
     Just click the boxes and enter data; proposal will be automatically generated below.
     <p>
-    
-    <h3>Project parameters</h3>
-    <select id="ta">
-      <option value=0></option>
-      <option value=1>Alternative/Complementary Medicine</option>
-      <option value=2>Anaesthesiology</option>
-      <option value=3>Blood</option>
-      <option value=4>Cancer</option>
-      <option value=5>Cardiovascular</option>
-      <option value=6>Diet and Nutrition</option>
-      <option value=7>Ear</option>
-      <option value=8>Eye</option>
-      <option value=9>Healthy Volunteers</option>
-      <option value=10>Human Genetics/Inherited Disorders</option>
-      <option value=11>Inflammatory/Immune System</option>
-      <option value=12>Injuries and Accidents</option>
-      <option value=13>Mental Health</option>
-      <option value=14>Metabolic and Endocrine</option>
-      <option value=15>Musculoskeletal</option>
-      <option value=16>Neurological</option>
-      <option value=17>Oral and Gastrointestinal</option>
-      <option value=18>Other</option>
-      <option value=19>Physical Medicine/Rehabilitation</option>
-      <option value=20>Public Health</option>
-      <option value=21>Renal and Urogenital</option>
-      <option value=22>Reproductive Health/Childbirth</option>
-      <option value=23>Respiratory</option>
-      <option value=24>Skin</option>
-      <option value=25>Stroke</option>
-      <option value=26>Surgery</option>
-    </select> Therapeutic Area
-    
-    <input type="number" id="sites"> Sites <br>
-    <input type="number" id="dur"> Duration (months) <br>
-    <input type="number" id="vis"> Visits <br>
-    <input type="number" id="part"> Participants <br>
-    <input type="number" id="test"> Unique tests <br>
-    
-    <h3>Services</h3>
-    <form action="">
-        <input type="checkbox" id="td"> Trial Design<br>
-        <input type="checkbox" id="tman"> Trial Management<br>
-        <input type="checkbox" id="tman"> Trial Management<br>
-        <input type="checkbox" id="tmon"> Trial Monitoring<br>
-        <input type="checkbox" id="des"> CRF Design and Data Capture<br>
-        <input type="checkbox" id="dm"> Data Management<br>
-        <input type="checkbox" id="stat"> Statistics<br>  
-        <input type="checkbox" id="msw"> Medical and Scientific Writing<br>  
-        <input type="checkbox" id="mmon"> Medical Monitoring and Pharmacovigilance<br>  
-        <input type="checkbox" id="aud"> Auditing<br>  
+    <form action="">  
+        <br>  
+        <h3>Project parameters</h3>
+        <select id="ta">
+          <option value=0></option>
+          <option value=1>Alternative/Complementary Medicine</option>
+          <option value=2>Anaesthesiology</option>
+          <option value=3>Blood</option>
+          <option value=4>Cancer</option>
+          <option value=5>Cardiovascular</option>
+          <option value=6>Diet and Nutrition</option>
+          <option value=7>Ear</option>
+          <option value=8>Eye</option>
+          <option value=9>Healthy Volunteers</option>
+          <option value=10>Human Genetics/Inherited Disorders</option>
+          <option value=11>Inflammatory/Immune System</option>
+          <option value=12>Injuries and Accidents</option>
+          <option value=13>Mental Health</option>
+          <option value=14>Metabolic and Endocrine</option>
+          <option value=15>Musculoskeletal</option>
+          <option value=16>Neurological</option>
+          <option value=17>Oral and Gastrointestinal</option>
+          <option value=18>Other</option>
+          <option value=19>Physical Medicine/Rehabilitation</option>
+          <option value=20>Public Health</option>
+          <option value=21>Renal and Urogenital</option>
+          <option value=22>Reproductive Health/Childbirth</option>
+          <option value=23>Respiratory</option>
+          <option value=24>Skin</option>
+          <option value=25>Stroke</option>
+          <option value=26>Surgery</option>
+        </select> Therapeutic Area
+
+        <input type="number" id="sites" min="1"> Sites <br>
+        <input type="number" id="dur" min="1"> Duration (months) <br>
+        <input type="number" id="vis" min="1"> Visits <br>
+        <input type="number" id="part" min="1"> Participants <br>
+        <input type="number" id="test" min="1"> Unique tests <br>
+
+        <span id = "datacolx">
+            <b>Data collection method:</b>
+            <input type="radio" name="datacol" value="EDC" onclick="writeDC(value)"> EDC
+            <input type="radio" name="datacol" value="Paper" onclick="writeDC(value)"> Paper<br>
+        </span>
+       
+        <br> 
+        <h3>Services</h3>
+
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="td"> Trial Design<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="tman"> Trial Management<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="prec"> Participant Recruitment<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="tmon"> Trial Monitoring<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="des"> CRF Design and Data Capture<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="de"> Data Entry<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="dm"> Data Management<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="stat"> Statistics<br>  
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="msw"> Medical and Scientific Writing<br> 
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="mmon"> Medical Monitoring and Pharmacovigilance<br>
+        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="aud"> Auditing<br>  
     </form>
+    <br> 
+    
+    <h3>Costing Estimate</h3>
+    <button type="button" onclick="calc()">Calculate</button> <br>
+    <label for="totalamt">Total cost:</label>
+    <input type="number" id="totalamt" readonly>
+    
+    <br> 
+    <h3>Generated Text</h3>
+
+    <div id="tdx" style="display: none">
+      We can do trial design.
+      <p></p>
+    </div>
+    <div id="tmanx" style="display: none">
+      I'm good at managing trials.
+      <p></p>
+    </div>
+    <div id="precx" style="display: none">
+      We can run a participant recruitment campaign for you.
+      <p></p>
+    </div>
+    <div id="tmonx" style="display: none">
+      Trial monitoring can happen.
+       <p></p>
+   </div>
+    <div id="desx" style="display: none">
+      We will design you a CRF. It will be a <span id=captype></span> form.
+      <p></p>
+    </div>
+    <div id="dex" style="display: none">
+      We can enter the data for you.
+       <p></p>
+   </div>
+    <div id="dmx" style="display: none">
+      Data management is no problem.
+       <p></p>
+   </div>
+    <div id="statx" style="display: none">
+      We do the number crunching.
+        <p></p>
+  </div>
+    <div id="mswx" style="display: none">
+      We can do the medical and scientific writing too! This is really a good thing because blah blah.
+       <p></p>
+   </div>
+    <div id="mmonx" style="display: none">
+        Medical monitoring - yep that's done by us as well.
+        <p></p>
+    </div>
+    <div id="audx" style="display: none">
+        Audits. We do them. Now here's some lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate minima quia magni debitis alias, temporibus quibusdam tempore unde repellendus sequi ab, nam laudantium! Molestiae odio, vitae, adipisci, optio perferendis et suscipit commodi fugit beatae repellendus nam eaque. Quas harum facilis eveniet provident culpa, sit non error saepe! Expedita laudantium modi explicabo quas dolores, autem repudiandae incidunt soluta nam, minus vel aliquid quia blanditiis ad vitae eaque aliquam neque omnis quis magni culpa molestiae accusamus! Consequuntur dolorum tenetur aspernatur illo laborum, in nobis, blanditiis totam autem neque iure sequi, at perferendis voluptates nihil. Placeat quidem deleniti dolores blanditiis odit beatae ullam eveniet possimus ipsam pariatur! Esse aspernatur minima consectetur maiores excepturi accusamus. Accusantium nam earum delectus, ipsum blanditiis fugiat itaque iusto magni dolor dolorum, animi iure inventore, repellat maiores incidunt quidem hic cupiditate! Explicabo, nisi minus officiis velit. Voluptatibus tempora nemo sequi maiores ducimus sit sunt eaque saepe, animi dolor atque tempore voluptatum fuga deserunt, error labore enim iure ab! Qui a obcaecati minima, earum distinctio eaque. Ad ullam beatae facere possimus voluptas recusandae voluptatum repudiandae praesentium ratione eveniet, ipsum, laborum, dolores sequi quasi aperiam in nihil repellendus harum eaque suscipit consectetur blanditiis. Aperiam quo accusamus repellendus maiores, dignissimos esse quis.
+        <p></p>
+    </div>
+
 </body>
 </html>
 
