@@ -4,25 +4,77 @@
    
     <meta charset="UTF-8">
     <title>Document</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="jquery-3.2.1.js"></script>
     
+    <link rel="stylesheet" href="w3.css">
+    
+    <style>
+        @font-face {
+            font-family:"Roboto";
+            src: url(Roboto-Regular.ttf) format("truetype");
+        }
+        {margin: 5px;}
+        body{
+            font-family: 'Roboto', sans-serif;
+            background: #000055;
+            color: #FFFBF9;
+            padding: 0;
+            margin: 0;
+        }
+        img{
+            background: #EA355A;
+            padding: 10px;
+            display: block;
+            border-radius: 3px;
+            margin: auto;
+        }
+        h1{
+            text-align: center;
+            padding: 0px 0px 30px 0px;
+        }
+    </style>
+    
     <script>
-        function hide(text) {
-            var x = document.getElementById(text);
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
+        
+        sidebarOpen = 0;
+    
+        function w3_open() {
+            if (sidebarOpen===0) {
+              document.getElementById("main").style.marginLeft = "20%";
+              document.getElementById("mySidebar").style.width = "20%";
+              document.getElementById("mySidebar").style.display = "block";
+              document.getElementById("openNav").style.display = 'inline-block';
+            sidebarOpen = 1;
+            } else {w3_close();}
+        }
+        function w3_close() {
+          document.getElementById("main").style.marginLeft = "0%";
+          document.getElementById("mySidebar").style.display = "none";
+          document.getElementById("openNav").style.display = "inline-block";
+            sidebarOpen = 0;
+        }
+
+        
+        function hide(id) {
+            var x = document.getElementById(id);
+            var y = document.getElementById(id+'y');
+            if (x.checked==true) {y.value=1} else {y.value=0}; 
         }
         
         window.onload = function() {
+            document.getElementById("javastatus").textContent = "Java is working.";
+            document.getElementById("javastatus").style.color = "#00FF00";
             if (window.jQuery) {  
                 // jQuery is loaded  
-                alert("Yeah!");
-            } else {
+                //alert("Yeah!");
+                document.getElementById("jquerystatus").textContent = "jQuery loaded successfully.";
+                document.getElementById("jquerystatus").style.color = "#00FF00";
+           } else {
                 // jQuery is not loaded
-                alert("Doesn't Work");
+                //alert("Doesn't Work");
+                document.getElementById("jquerystatus").textContent = "jQuery DID NOT LOAD successfully.";
+                document.getElementById("jquerystatus").style.color = "#FF0000";
             }
         }
         
@@ -39,135 +91,225 @@
             document.getElementById("totalamt").value = total;
         }
 
+        //jquery functions
         $(document).ready(function(){
             $("#datacolx input:radio").click(function() {
                 $("#captype").text($(this).val());
             });
+            
+            $(document).bind('click', function() {
+                document.getElementById("c").value = parseInt(document.getElementById("c").value)+1;
+                
+                //hidden values
+                var diff;
+                switch(parseInt(document.getElementById("ta").value)) {
+                    case 1: diff = 3; break;                     case 2: diff = 7; break;                     case 3: diff = 8; break;
+                    case 4: diff = 10; break;                    case 5: diff = 8; break;                     case 6: diff = 3; break;
+                    case 7: diff = 6; break;                     case 8: diff = 6; break;                     case 9: diff = 1; break;
+                    case 10: diff = 10; break;                   case 11: diff = 7; break;                    case 12: diff = 7; break;
+                    case 13: diff = 7; break;                    case 14: diff = 7; break;                    case 15: diff = 6; break;
+                    case 16: diff = 6; break;                    case 17: diff = 5; break;                    case 18: diff = 5; break;
+                    case 19: diff = 3; break;                    case 20: diff = 2; break;                    case 21: diff = 5; break;
+                    case 22: diff = 6; break;                    case 23: diff = 4; break;                    case 24: diff = 2; break;
+                    case 25: diff = 4; break;                    case 26: diff = 5; break;                    default: diff = 0;
+                };
+                document.getElementById("tax").value = diff;
+                    
+                //display additional input elements
+                var temp = document.getElementById("datacolx").style; if (document.getElementById("tdy").value==1) { temp.display = "block"} else {temp.display = "none"};
+                var temp = document.getElementById("monvisx").style; if (document.getElementById("tmony").value==1) { temp.display = "block"} else {temp.display = "none"};
+                
+                //display text
+                var temp = document.getElementById("tdx").style; if (document.getElementById("tdy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("precx").style; if (document.getElementById("precy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("tmonx").style; if (document.getElementById("tmony").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("dex").style; if (document.getElementById("dey").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("dmx").style; if (document.getElementById("dmy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("statx").style; if (document.getElementById("staty").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("mswx").style; if (document.getElementById("mswy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("mmonx").style; if (document.getElementById("mmony").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var temp = document.getElementById("audx").style; if (document.getElementById("audy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                
+            });
         });
+        
+        
     </script>
     
 </head>
+    
+    
+    
+    
+    
 <body>
-   <img src="http://crolarp.com/uploads/3/5/1/8/35182276/1360695402.png" alt="">
-    <h1>Prototype proposal generator</h1>
-    <h2>Instructions</h2>
-    Just click the boxes and enter data; proposal will be automatically generated below.
-    <p>
-    <form action="">  
-        <br>  
-        <h3>Project parameters</h3>
-        <select id="ta">
-          <option value=0></option>
-          <option value=1>Alternative/Complementary Medicine</option>
-          <option value=2>Anaesthesiology</option>
-          <option value=3>Blood</option>
-          <option value=4>Cancer</option>
-          <option value=5>Cardiovascular</option>
-          <option value=6>Diet and Nutrition</option>
-          <option value=7>Ear</option>
-          <option value=8>Eye</option>
-          <option value=9>Healthy Volunteers</option>
-          <option value=10>Human Genetics/Inherited Disorders</option>
-          <option value=11>Inflammatory/Immune System</option>
-          <option value=12>Injuries and Accidents</option>
-          <option value=13>Mental Health</option>
-          <option value=14>Metabolic and Endocrine</option>
-          <option value=15>Musculoskeletal</option>
-          <option value=16>Neurological</option>
-          <option value=17>Oral and Gastrointestinal</option>
-          <option value=18>Other</option>
-          <option value=19>Physical Medicine/Rehabilitation</option>
-          <option value=20>Public Health</option>
-          <option value=21>Renal and Urogenital</option>
-          <option value=22>Reproductive Health/Childbirth</option>
-          <option value=23>Respiratory</option>
-          <option value=24>Skin</option>
-          <option value=25>Stroke</option>
-          <option value=26>Surgery</option>
-        </select> Therapeutic Area <br>
+    
+    <div class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-blue" style="display:none" id="mySidebar">
+      <button class="w3-bar-item w3-button w3-large"
+      onclick="w3_close()">Close &times;</button>
+    <div class="w3-padding-small" style="font-weight: bold font-size:30px">Quick Navigation</div>
+      <a href="#sec1" class="w3-bar-item w3-button">Top</a>
+      <a href="#sec2" class="w3-bar-item w3-button">Project parameters</a>
+      <a href="#sec3" class="w3-bar-item w3-button">Services</a>
+      <a href="#sec4" class="w3-bar-item w3-button">Extra Parameters</a>
+      <a href="#sec5" class="w3-bar-item w3-button">Costing Estimate</a>
+      <a href="#sec6" class="w3-bar-item w3-button">Generated Text</a>
+    </div>
+    
+    <div id="main" class="w3-padding">
+            
+        <div class="w3-blue w3-top" style="margin-left: -16px; margin-top:-8px">
+            <button id="openNav" class="w3-button w3-blue w3-xlarge" onclick="w3_open()">&#9776; </button> Prototype proposal generator v0.1
+        </div>  
+    
+<br><br>
+<a name="sec1"></a>
+        <h2>Instructions</h2>
+        Just click the boxes and enter data; proposal will be automatically generated below. <p>
+        <span id=javastatus style="color: #FF0000">Java isn't loaded.</span>
+        <span id=jquerystatus></span><p>
+        <input type="number" id="c" value=0 readonly>
 
-        <input type="number" id="sites" min="1"> Sites <br>
-        <input type="number" id="dur" min="1"> Duration (months) <br>
-        <input type="number" id="vis" min="1"> Visits <br>
-        <input type="number" id="part" min="1"> Participants <br>
-        <input type="number" id="test" min="1"> Unique tests <br>
 
-        <span id = "datacolx">
-            <b>Data collection method:</b>
-            <input type="radio" name="datacol" value="EDC"> EDC
-            <input type="radio" name="datacol" value="Paper"> Paper<br>
-        </span>
-       
+        <form action="">  
+            <br>  
+<a name="sec2"></a>
+            <h3>Project parameters</h3>
+            <select id="ta">
+              <option value=0></option>
+              <option value=1>Alternative/Complementary Medicine</option>
+              <option value=2>Anaesthesiology</option>
+              <option value=3>Blood</option>
+              <option value=4>Cancer</option>
+              <option value=5>Cardiovascular</option>
+              <option value=6>Diet and Nutrition</option>
+              <option value=7>Ear</option>
+              <option value=8>Eye</option>
+              <option value=9>Healthy Volunteers</option>
+              <option value=10>Human Genetics/Inherited Disorders</option>
+              <option value=11>Inflammatory/Immune System</option>
+              <option value=12>Injuries and Accidents</option>
+              <option value=13>Mental Health</option>
+              <option value=14>Metabolic and Endocrine</option>
+              <option value=15>Musculoskeletal</option>
+              <option value=16>Neurological</option>
+              <option value=17>Oral and Gastrointestinal</option>
+              <option value=18>Other</option>
+              <option value=19>Physical Medicine/Rehabilitation</option>
+              <option value=20>Public Health</option>
+              <option value=21>Renal and Urogenital</option>
+              <option value=22>Reproductive Health/Childbirth</option>
+              <option value=23>Respiratory</option>
+              <option value=24>Skin</option>
+              <option value=25>Stroke</option>
+              <option value=26>Surgery</option>
+            </select> Therapeutic Area <br>
+            <input type="number" id="tax" value=0 readonly hidden>
+
+            <input type="number" id="sites" min="1"> Sites <br>
+            <input type="number" id="dur" min="1"> Duration (months) <br>
+            <input type="number" id="vis" min="1"> Visits <br>
+            <input type="number" id="part" min="1"> Participants <br>
+            <input type="number" id="test" min="1"> Unique tests <br>
+
+            <span id = "phasex">
+                <b>Phase:</b>
+                <input type="radio" name="phase" value=1> 1 &nbsp;
+                <input type="radio" name="phase" value=2> 2 &nbsp;
+                <input type="radio" name="phase" value=3> 3 &nbsp;
+                <input type="radio" name="phase" value=4> 4 &nbsp;
+                <input type="radio" name="phase" value=5> Post-Marketing
+                <br>
+            </span>
+            <span id = "riskx">
+                <b>Risk:</b>
+                <input type="radio" name="phase" value=1> Conservative &nbsp;
+                <input type="radio" name="phase" value=2> Moderate &nbsp;
+                <input type="radio" name="phase" value=3> Risky 
+                <br>
+            </span>       
+            <br> 
+<a name="sec3"></a>
+            <h3>Services</h3>
+
+            <input type="checkbox" name="serv" onclick="hide(id)" id="td"> Trial Design<br>
+            <input type="checkbox" name="serv" onclick="hide(id)" id="prec"> Participant Recruitment<br>
+            <input type="checkbox" name="serv" onclick="hide(id)" id="de"> Data Entry<br>
+            <input type="checkbox" name="serv" onclick="hide(id)" id="tmon"> Trial Monitoring<br>
+            <input type="checkbox" name="serv" onclick="hide(id)" id="dm"> Data Management<br>
+            <input type="checkbox" name="serv" onclick="hide(id)" id="stat"> Statistics<br>  
+            <input type="checkbox" name="serv" onclick="hide(id)" id="msw"> Medical and Scientific Writing<br> 
+            <input type="checkbox" name="serv" onclick="hide(id)" id="mmon"> Medical Monitoring and Pharmacovigilance<br>
+            <input type="checkbox" name="serv" onclick="hide(id)" id="aud"> Auditing<br>
+
+            <input type="number" id="tdy" value=0 readonly hidden>
+            <input type="number" id="precy" value=0 readonly hidden>
+            <input type="number" id="tmony" value=0 readonly hidden>
+            <input type="number" id="dey" value=0 readonly hidden>
+            <input type="number" id="dmy" value=0 readonly hidden>
+            <input type="number" id="staty" value=0 readonly hidden>
+            <input type="number" id="mswy" value=0 readonly hidden>
+            <input type="number" id="mmony" value=0 readonly hidden>
+            <input type="number" id="audy" value=0 readonly hidden>
+
+            <br> 
+<a name="sec4"></a>
+            <h3>Extra parameters</h3>
+            <span id = "datacolx" style="display: none">
+                <b>Data collection method:</b>
+                <input type="radio" name="datacol" value="EDC"> EDC &nbsp;
+                <input type="radio" name="datacol" value="Paper"> Paper<br>
+            </span>
+            <span id = "monvisx" style="display: none">
+                <input type="number" id="monvis" min="1"> Monitoring visits <br>
+            </span>
+        </form>
         <br> 
-        <h3>Services</h3>
 
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="td"> Trial Design<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="tman"> Trial Management<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="prec"> Participant Recruitment<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="tmon"> Trial Monitoring<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="des"> CRF Design and Data Capture<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="de"> Data Entry<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="dm"> Data Management<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="stat"> Statistics<br>  
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="msw"> Medical and Scientific Writing<br> 
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="mmon"> Medical Monitoring and Pharmacovigilance<br>
-        <input type="checkbox" name="serv" onclick="hide(id+'x')" id="aud"> Auditing<br>  
-    </form>
-    <br> 
-    
-    <h3>Costing Estimate</h3>
-    <button type="button" onclick="calc()">Calculate</button> <br>
-    <label for="totalamt">Total cost:</label>
-    <input type="number" id="totalamt" readonly>
-    
-    <br> 
-    <h3>Generated Text</h3>
+<a name="sec5"></a>
+        <h3>Costing Estimate</h3>
+        <button type="button" onclick="calc()">Calculate</button> <br>
+        <input type="number" id="p1h" readonly style="width: 6em" value = 0> h @ 
+        <input type="number" id="p1r" style="width: 6em" value = 0> (rate) = <input type="number" id="p1t" readonly style="width: 6em"> Preliminaries<br>
+        <input type="number" id="p2h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p2r" style="width: 6em" value = 0> (rate) = <input type="number" id="p2t" readonly style="width: 6em"> Clinical Trial Setup<br>
+        <input type="number" id="p12h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p12r" style="width: 6em" value = 210> (rate) = <input type="number" id="p12t" readonly style="width: 6em"> Patient Recruitment<br>
+        <input type="number" id="p3h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p3r" style="width: 6em" value = 0> (rate) = <input type="number" id="p3t" readonly style="width: 6em"> Data Management Setup<br>
+        <input type="number" id="p4h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p4r" style="width: 6em" value = 0> (rate) = <input type="number" id="p4t" readonly style="width: 6em"> Monitoring<br>
+        <input type="number" id="p5h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p5r" style="width: 6em" value = 0> (rate) = <input type="number" id="p5t" readonly style="width: 6em"> Data Capture<br>
+        <input type="number" id="p6h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p6r" style="width: 6em" value = 0> (rate) = <input type="number" id="p6t" readonly style="width: 6em"> Data Validation<br>
+        <input type="number" id="p7h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p7r" style="width: 6em"  value = 0> (rate) = <input type="number" id="p7t" readonly style="width: 6em"> Statistics and Report<br>
+        <input type="number" id="p8h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p8r" style="width: 6em" value = 0> (rate) = <input type="number" id="p8t" readonly style="width: 6em"> Project Management<br>
+        <input type="number" id="p10h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p10r" style="width: 6em" value = 210> (rate) = <input type="number" id="p10t" readonly style="width: 6em"> Pharmacovigilance<br>
+        <input type="number" id="p11h" readonly style="width: 6em" value = 0> h @
+        <input type="number" id="p11r" style="width: 6em" value = 200> (rate) = <input type="number" id="p11t" readonly style="width: 6em"> Auditing<br>
+         Total cost <input type="number" id="totalamt" readonly>
 
-    <div id="tdx" style="display: none">
-      We can do trial design.
-      <p></p>
-    </div>
-    <div id="tmanx" style="display: none">
-      I'm good at managing trials.
-      <p></p>
-    </div>
-    <div id="precx" style="display: none">
-      We can run a participant recruitment campaign for you.
-      <p></p>
-    </div>
-    <div id="tmonx" style="display: none">
-      Trial monitoring can happen.
-       <p></p>
-   </div>
-    <div id="desx" style="display: none">
-      We will design you a CRF. It will be a <span id=captype></span> form.
-      <p></p>
-    </div>
-    <div id="dex" style="display: none">
-      We can enter the data for you.
-       <p></p>
-   </div>
-    <div id="dmx" style="display: none">
-      Data management is no problem.
-       <p></p>
-   </div>
-    <div id="statx" style="display: none">
-      We do the number crunching.
-        <p></p>
-  </div>
-    <div id="mswx" style="display: none">
-      We can do the medical and scientific writing too! This is really a good thing because blah blah.
-       <p></p>
-   </div>
-    <div id="mmonx" style="display: none">
-        Medical monitoring - yep that's done by us as well.
-        <p></p>
-    </div>
-    <div id="audx" style="display: none">
-        Audits. We do them. Now here's some lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate minima quia magni debitis alias, temporibus quibusdam tempore unde repellendus sequi ab, nam laudantium! Molestiae odio, vitae, adipisci, optio perferendis et suscipit commodi fugit beatae repellendus nam eaque. Quas harum facilis eveniet provident culpa, sit non error saepe! Expedita laudantium modi explicabo quas dolores, autem repudiandae incidunt soluta nam, minus vel aliquid quia blanditiis ad vitae eaque aliquam neque omnis quis magni culpa molestiae accusamus! Consequuntur dolorum tenetur aspernatur illo laborum, in nobis, blanditiis totam autem neque iure sequi, at perferendis voluptates nihil. Placeat quidem deleniti dolores blanditiis odit beatae ullam eveniet possimus ipsam pariatur! Esse aspernatur minima consectetur maiores excepturi accusamus. Accusantium nam earum delectus, ipsum blanditiis fugiat itaque iusto magni dolor dolorum, animi iure inventore, repellat maiores incidunt quidem hic cupiditate! Explicabo, nisi minus officiis velit. Voluptatibus tempora nemo sequi maiores ducimus sit sunt eaque saepe, animi dolor atque tempore voluptatum fuga deserunt, error labore enim iure ab! Qui a obcaecati minima, earum distinctio eaque. Ad ullam beatae facere possimus voluptas recusandae voluptatum repudiandae praesentium ratione eveniet, ipsum, laborum, dolores sequi quasi aperiam in nihil repellendus harum eaque suscipit consectetur blanditiis. Aperiam quo accusamus repellendus maiores, dignissimos esse quis.
-        <p></p>
-    </div>
+        <br> 
+<a name="sec6"></a>
+        <h3>Generated Text</h3>
 
+        <div id="tdx" style="display: none">      We can do trial design. We will design you a CRF. It will be a <span id=captype></span> form.      <p>    </div>
+        <div id="precx" style="display: none">      We can run a participant recruitment campaign for you.      <p>    </div>
+        <div id="tmonx" style="display: none">      Trial monitoring can happen.       <p>   </div>
+        <div id="dex" style="display: none">      We can enter the data for you.       <p>   </div>
+        <div id="dmx" style="display: none">      Data management is no problem.       <p>   </div>
+        <div id="statx" style="display: none">      We do the number crunching.        <p>  </div>
+        <div id="mswx" style="display: none">      We can do the medical and scientific writing too! This is really a good thing because blah blah.       <p>   </div>
+        <div id="mmonx" style="display: none">        Medical monitoring - yep that's done by us as well.        <p>    </div>
+        <div id="audx" style="display: none">
+            Audits. We do them. Now here's some lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate minima quia magni debitis alias, temporibus quibusdam tempore unde repellendus sequi ab, nam laudantium! Molestiae odio, vitae, adipisci, optio perferendis et suscipit commodi fugit beatae repellendus nam eaque. Quas harum facilis eveniet provident culpa, sit non error saepe! Expedita laudantium modi explicabo quas dolores, autem repudiandae incidunt soluta nam, minus vel aliquid quia blanditiis ad vitae eaque aliquam neque omnis quis magni culpa molestiae accusamus! Consequuntur dolorum tenetur aspernatur illo laborum, in nobis, blanditiis totam autem neque iure sequi, at perferendis voluptates nihil. Placeat quidem deleniti dolores blanditiis odit beatae ullam eveniet possimus ipsam pariatur! Esse aspernatur minima consectetur maiores excepturi accusamus. Accusantium nam earum delectus, ipsum blanditiis fugiat itaque iusto magni dolor dolorum, animi iure inventore, repellat maiores incidunt quidem hic cupiditate! Explicabo, nisi minus officiis velit. Voluptatibus tempora nemo sequi maiores ducimus sit sunt eaque saepe, animi dolor atque tempore voluptatum fuga deserunt, error labore enim iure ab! Qui a obcaecati minima, earum distinctio eaque. Ad ullam beatae facere possimus voluptas recusandae voluptatum repudiandae praesentium ratione eveniet, ipsum, laborum, dolores sequi quasi aperiam in nihil repellendus harum eaque suscipit consectetur blanditiis. Aperiam quo accusamus repellendus maiores, dignissimos esse quis.
+            <p>    </div>
+
+    </div>
 </body>
 </html>
 
