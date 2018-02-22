@@ -79,10 +79,11 @@
         function calc_mon(area,site,dur,visits,subs,tests,repttime,trvltime) {
             var pthrs = subs*tests*visits*0.05;
             var monvisnum = pthrs/7;
+            var admin = 12*dur*site;
             if (repttime==1) {trvltime=0;} //aka if visit is online
             else if (repttime==15) {repttime=1.5;trvltime=trvltime/2;} //aka if visit is two day
             var visithrs = monvisnum*(repttime+trvltime);
-            var total = pthrs + visithrs + site*0.5;
+            var total = admin + pthrs + visithrs + site*0.5;
             document.getElementById("phtmon").value = total;
         }
 
